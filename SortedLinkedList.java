@@ -19,7 +19,7 @@ public class SortedLinkedList {
         NodeType n = new NodeType();
         boolean reachEnd = true;
         Nodetype temp;
-        if(head == null) { //empty list                                                                                                                                    
+        if(head == null) { //empty list                                                                                                                                                                
             temp = new NodeType(item);
             head = temp;
             return;
@@ -51,7 +51,7 @@ public class SortedLinkedList {
     }
     public void deleteItem(ItemType item) {
 
-    }    
+    }
     public int searchItem(ItemType item) {
         return -1;
     }
@@ -60,6 +60,14 @@ public class SortedLinkedList {
     }
     public void resetList() {
 
+    }
+    public String toString() {
+        currentPos = head;
+        String ret = "";
+        while(currentPos != null) {
+            ret += currentPos.info.getValue() + " ";
+        }
+        return ret;
     }
 
 }
