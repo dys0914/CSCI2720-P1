@@ -1,54 +1,69 @@
 package Project1;
 
+import java.io.File;
 import java.util.Scanner;
-public class LinkedListDriver() {
+public class LinkedListDriver {
     public static void main(String args[]) {
+        SortedLinkedList sll = new SortedLinkedList();
         if(args.length > 0) {
-            String filename = args[0];
+            try {
+                String filename = args[0];
+                File file = new File(filename);
+                Scanner reader = new Scanner(file);
+                int a;
+                while(reader.hasNext()) {
+                    a = reader.nextInt();
+                    sll.insertItem(new ItemType(a));
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         Scanner sc = new Scanner(System.in);
         boolean end = false;
-        SortedLinkedList sll = new SortedLinkedList();
+        SortedLinkedList copy, temp;
+        int x;
         while(!end) {
-            System.out.println("Enter a command : ");
+            System.out.print("Enter a command : ");
             String next = sc.next();
             switch (next) {
             case "i":
-                System.out.println("Enter a number to insert : ");
+                System.out.print("Enter a number to insert : ");
+                x = sc.nextInt();
                 System.out.println("Original list : " + sll);
-                int x = sc.nextInt();
                 sll.insertItem(new ItemType(x));
                 System.out.println("New List : " + sll);
                 break;
             case "d":
-                System.out.println("Enter a number to delete : ");
-                System.out.println("Original list : " + sll);
-                int x = sc.nextInt();
-                sll.deleteItem(new ItemType(x));
-                System.out.println("New List : " + sll);
+                System.out.print("Enter a number to delete : ");
+                x = sc.nextInt();
+                if(sll.getLength() != 0) {
+                    System.out.println("Original list : " + sll);
+                    sll.deleteItem(new ItemType(x));
+                    System.out.println("New List : " + sll);
+                }
+                else {
+                    System.out.println("You cannot delete from an empty list");
+                }
                 break;
             case "s":
-                System.out.println("Enter a number to search: ");
+                System.out.print("Enter a number to search: ");
+                x = sc.nextInt();
                 System.out.println("Original list: " + sll);
-                int x = sc.nextInt();
                 int search = sll.searchItem(new ItemType(x));
-                if(search < 0) {
-                    System.out.println("Item is not present in the list");
-                }
-                else if(sll.getLength == 0) {
+                if(sll.getLength() == 0) {
                     System.out.println("The list is empty");
+                }
+                else if(search < 0) {
+                    System.out.println("Item is not present in the list");
                 }
                 else {
                     System.out.println("The item is present at index " + search);
                 }
                 break;
             case "n":
-                ItemType t = sll.getNextItem(); //check implementation                                                                                                                                 
-                if(t == null) {
-                    sll.resetList();
-                }
-
-                System.out.println(t.getValue());
+                System.out.println(sll.getNextItem().getValue());                                                                                                                                                                                      
                 break;
             case "r":
                 sll.resetList();
@@ -56,35 +71,41 @@ public class LinkedListDriver() {
                 break;
             case "a":
                 System.out.println("Original list: " + sll);
-                SortedLinkedList copy = sll;
-                sll.deleteAlternateNodes();
+                copy = sll;
+                sll.DeleteAlternate();
                 System.out.println("Modified list: " + sll);
                 sll = copy;
                 break;
             case "m":
-                System.out.println("Enter the length of the new list: ");
-                SortedLinkedList merge = new SortedLinkedList();
-                SortedLinkedList copy = sll;
-                System.out.println("Enter the numbers: ");
-                for(int i = 0; i < l; i++) {
+                System.out.print("Enter the length of the new list: ");
+                temp = new SortedLinkedList();
+                copy = sll;
+                x = sc.nextInt();
+                System.out.print("Enter the numbers: ");
+                for(int i = 0; i < x; i++) {
                     int l = sc.nextInt();
-                    merge.insertItem(new ItemType(l));
+                    temp.insertItem(new ItemType(l));
                 }
                 System.out.println("The list 1: " + sll);
-                System.out.println("The list 2: " + merge);
-                System.out.println("Merged List: " + sll);// check implementation                                                                                                                      
+                System.out.println("The list 2: " + temp);
+                sll.mergeList(temp);
+                System.out.println("Merged List: " + sll);// check implementation                                                                                                                                                             
                 sll = copy;
                 break;
             case "t":
-                System.out.println("Enter the length of the new list: ");
-                SortedLinkedList merge = new SortedLinkedList();
-                SortedLinkedList copy = sll;
-                System.out.println("Enter the numbers: ");
-                for(int i = 0; i < l; i++) {
+                System.out.print("Enter the length of the new list: ");
+                temp = new SortedLinkedList();
+                copy = sll;
+                x = sc.nextInt();
+                System.out.print("Enter the numbers: ");
+                for(int i = 0; i < x; i++) {
                     int l = sc.nextInt();
-                    merge.insertItem(new ItemType(l));
+                    temp.insertItem(new ItemType(l));
                 }
-                System.out.println("Intersection of lists: " + sll);
+                System.out.println("The list 1: " + sll);
+                System.out.println("The list 2: " + temp);
+                System.out.print("Intersection of lists: ");
+                sll.intersection(temp);
                 sll = copy;
                 break;
             case "p":
