@@ -1,3 +1,5 @@
+package Project1;
+
 public class ItemType {
     private int value;
     public ItemType() {
@@ -11,7 +13,7 @@ public class ItemType {
         if(item.getValue() > value) {
             ret = -1;
         }
-        else if(item.getValue() > value) {
+        else if(item.getValue() <  value) {
             ret = 1;
         }
         return ret;
