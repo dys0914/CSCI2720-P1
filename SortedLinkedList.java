@@ -6,27 +6,27 @@ public class SortedLinkedList {
     private NodeType currentPos;
     public SortedLinkedList() {
         head = new NodeType();
-        currentPos = null;
+        currentPos = head.next;
     }
     public int getLength() {
         int counter = 0;
-        currentPos = head;
-        while(currentPos != null) {
-            currentPos = currentPos.next;
+        NodeType temp = head;
+        while(temp.next != null) {
+            temp = temp.next;
             counter++;
         }
         return counter;
     }
     public void insertItem(ItemType item) {
         NodeType insertionNode = new NodeType(item);
-        if(head.next == null) { //empty list                                                                                                                                    
+        if(head.next == null) { //empty list                                                                                                                                                                                                  
 
             head.next = insertionNode;
             return;
         }
-        
+
         currentPos = head;
-        
+
         while(currentPos.next != null) {
             if(currentPos.next.info.compareTo(item) == 0){
                 System.out.println("Sorry. You cannot insert the duplicate item");
@@ -36,12 +36,13 @@ public class SortedLinkedList {
                 insertionNode.next = currentPos.next;
                 currentPos.next = insertionNode;
                 return;
-            }       
+            }
             currentPos = currentPos.next;
         }
         if(currentPos.info.compareTo(item) == -1){
             currentPos.next = insertionNode;
         }
+        currentPos = head;
     }
     public void deleteItem(ItemType item) {
         if(head.next == null){
@@ -62,15 +63,14 @@ public class SortedLinkedList {
             iter = iter.next;
         }
         System.out.println("Item not found.");
-
-
-    }    
+        
+    }
     public int searchItem(ItemType item) {
         NodeType iter = head;
         int index = 0;
         while(iter.next != null){
             if(iter.next.info.compareTo(item)==0){
-                return index;
+                return index+1;
             }
             index ++;
             iter = iter.next;
@@ -79,6 +79,7 @@ public class SortedLinkedList {
         return -1;
     }
     public ItemType getNextItem() {
+
         if (head.next == null){
             System.out.println("List is empty");
             return null;
@@ -96,7 +97,7 @@ public class SortedLinkedList {
 
     @Override
     public String toString(){
-        String ret = "[ ";
+	    String ret = "[ ";
         NodeType iter = head.next;
         while (iter != null){
             ret += iter.info.getValue() + " ";
@@ -118,14 +119,14 @@ public class SortedLinkedList {
 
     private void mergeHelperInsert(ItemType item){
         NodeType insertionNode = new NodeType(item);
-        if(head.next == null) { //empty list                                                                                                                                    
+        if(head.next == null) { //empty list                                                                                                                                                                                                  
 
             head.next = insertionNode;
             return;
         }
-        
+
         currentPos = head;
-        
+
         while(currentPos.next != null) {
             if(currentPos.next.info.compareTo(item) == 0){
                 return;
@@ -134,7 +135,7 @@ public class SortedLinkedList {
                 insertionNode.next = currentPos.next;
                 currentPos.next = insertionNode;
                 return;
-            }       
+            }
             currentPos = currentPos.next;
         }
         if(currentPos.info.compareTo(item) == -1){
@@ -155,7 +156,7 @@ public class SortedLinkedList {
                 iter = iter.next;
             }
             count++;
-            
+
         }
     }
 
@@ -185,3 +186,4 @@ public class SortedLinkedList {
     }
 
 }
+
